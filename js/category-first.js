@@ -28,6 +28,34 @@ $(function () {
         
        
     });
+
+    $('#saveBtn').on('click',function(){
+        var categoryName = $.trim($('#cateInput').val());
+        console.log(categoryName);
+        if(!categoryName){
+            alert('请输入内容');
+            return;
+        }
+        $.ajax({
+            url:`${APP.baseUrl}/category/addTopCategory`,
+            type:'post',
+            data:{
+                categoryName
+            },
+            success:function(response){
+                if(response.success){
+                    alert('添加成功');
+                    location.reload();
+                }else{
+                    alert(response.message);
+                }
+            }
+        })
+
+    })
+
+
+
     function getdata(){
         $.ajax({
             type: 'get',
