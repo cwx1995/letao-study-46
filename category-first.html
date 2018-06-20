@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>乐淘-商品管理</title>
@@ -7,9 +8,12 @@
 	<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/system.css">
 	<script src="assets/jquery/jquery.min.js"></script>
+	<script src="assets/artTemplate/template-native.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/common.js"></script>
+	<script src="js/category-first.js"></script>
 </head>
+
 <body>
 	<div class="system">
 		<div class="aside">
@@ -53,38 +57,36 @@
 		</div>
 		<div class="main">
 			<div class="header">
-	            <nav class="navbar navbar-custom">
-	                <div class="navbar-header">
-	                    <a href="javascript:;" class="navbar-brand">
-	                        <i class="fa fa-navicon"></i>
-	                    </a>
-	                </div>
-	                <ul class="nav navbar-nav navbar-right">
-	                    <li>
-	                        <a href="javascript:;" class="login_out_bot">
-	                            <i class="fa fa-sign-out"></i> 退出
-	                        </a>
-	                    </li>
-	                </ul>
-	            </nav>
-	        </div>
-	        <div class="body">
-	        	<button class="operation btn btn-primary" data-toggle="modal" data-target=".category-first">添加分类</button>
-	        	<table class="table table-bordered">
-	        		<tr>
-	        			<th>分类的编号</th>
-	        			<th>分类名称</th>
-	        		</tr>
-	        		<tr>
-	        			<td>1</td>
-	        			<td>运动馆</td>
-	        		</tr>
-	        	</table>
-	        	<div class="btn-group page">
-	        		<div class="btn btn-default">上一页</div>
-	        		<div class="btn btn-default">下一页</div>
-	        	</div>
-	        </div>
+				<nav class="navbar navbar-custom">
+					<div class="navbar-header">
+						<a href="javascript:;" class="navbar-brand">
+							<i class="fa fa-navicon"></i>
+						</a>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="javascript:;" class="login_out_bot">
+								<i class="fa fa-sign-out"></i> 退出
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="body">
+				<button class="operation btn btn-primary" data-toggle="modal" data-target=".category-first">添加分类</button>
+				<table class="table table-bordered">
+					<tbody id="firstBox">
+						<tr>
+							<th>分类的编号</th>
+							<th>分类名称</th>
+						</tr>
+					</tbody>
+				</table>
+				<div class="btn-group page">
+					<div class="btn btn-default" id="prev">上一页</div>
+					<div class="btn btn-default" id="next">下一页</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -92,7 +94,9 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+					<button type="button" class="close" data-dismiss="modal">
+						<span>×</span>
+					</button>
 					<h4 class="modal-title" id="myLargeModalLabel">添加分类</h4>
 				</div>
 				<div class="modal-body">
@@ -107,6 +111,14 @@
 			</div>
 		</div>
 	</div>
-
+	<script type="text/html" id="firstTpl">
+		<%for(var i =0;i<rows.length;i++){%>
+	<tr>
+	        			<td><%=rows[i].id%></td>
+	        			<td><%=rows[i].categoryName%></td>
+					</tr>
+					<%}%>
+	</script>
 </body>
+
 </html>
