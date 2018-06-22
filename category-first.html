@@ -76,10 +76,7 @@
 				<button class="operation btn btn-primary" data-toggle="modal" data-target=".category-first">添加分类</button>
 				<table class="table table-bordered">
 					<tbody id="firstBox">
-						<tr>
-							<th>分类的编号</th>
-							<th>分类名称</th>
-						</tr>
+
 					</tbody>
 				</table>
 				<div class="btn-group page">
@@ -112,6 +109,10 @@
 		</div>
 	</div>
 	<script type="text/html" id="firstTpl">
+		<tr>
+				<th>分类的编号</th>
+				<th>分类名称</th>
+			</tr>
 		<%for(var i =0;i<rows.length;i++){%>
 	<tr>
 	        			<td><%=rows[i].id%></td>

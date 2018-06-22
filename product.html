@@ -7,8 +7,13 @@
 	<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/system.css">
 	<script src="assets/jquery/jquery.min.js"></script>
+	<script src="assets/jquery-fileupload/jquery.ui.widget.js"></script>
+	<script src="assets/jquery-fileupload/jquery.iframe-transport.js"></script>
+	<script src="assets/jquery-fileupload/jquery.fileupload.js"></script>
+	<script src="assets/artTemplate/template-native.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/common.js"></script>
+	<script src="js/product.js"></script>
 </head>
 <body>
 	<div class="system">
@@ -71,6 +76,7 @@
 	        <div class="body">
 	        	<button class="operation btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">添加商品</button>
 	        	<table class="table table-bordered">
+					<tbody id="proBox">
 	        		<tr>
 	        			<th>商品编号</th>
 	        			<th>商品名称</th>
@@ -80,17 +86,7 @@
 	        			<th>是否下架</th>
 	        			<th>操作</th>
 	        		</tr>
-	        		<tr>
-	        			<td>6</td>
-	        			<td>【莹恋】MIZUNO美津浓V1GA159002乒乓球鞋男鞋女鞋室内综合训练鞋</td>
-	        			<td>商品描述</td>
-	        			<td>44</td>
-	        			<td>35-56</td>
-	        			<td>已上架商品</td>
-	        			<td>
-	        				<button type="button" class="btn btn-danger">下架</button>
-	        			</td>
-	        		</tr>
+	        		</tbody>
 	        	</table>
 	        </div>
 		</div>
@@ -100,38 +96,39 @@
 	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	    	<div class="modal-header">
-	    		<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+	    		<button type="button" class="close" data-dismiss="modal" ><span>×</span></button>
 	    		<h4 class="modal-title" id="myLargeModalLabel">添加商品</h4>
 	    	</div>
-	    	<div class="modal-body">
+	    	<form class="modal-body" id="formList"  enctype="multipart/form-data">
 	    		<div class="form-group">
-		    		<select class="form-control">
+		    		<select class="form-control"  id="addBox">
 		    			<option>-- 请选择品牌 --</option>
 		    		</select>
 	    		</div>
 	    		<div class="form-group">
-	    			<input type="text" class="form-control" placeholder="请输入产品名称">
+	    			<input type="text" class="form-control" placeholder="请输入产品名称" name="proName">
 	    		</div>
 	    		<div class="form-group">
-	    			<input type="text" class="form-control" placeholder="请输入产品描述">
+	    			<input type="text" class="form-control" placeholder="请输入产品描述" name="proDesc">
 	    		</div>
 	    		<div class="form-group">
-	    			<input type="text" class="form-control" placeholder="请输入产品数量">
+	    			<input type="text" class="form-control" placeholder="请输入产品数量" name="num">
 	    		</div>
 	    		<div class="form-group">
-	    			<input type="text" class="form-control" placeholder="请输入产品尺码,如29-39">
+	    			<input type="text" class="form-control" placeholder="请输入产品尺码,如29-39" name="size">
 	    		</div>
 	    		<div class="form-group">
-	    			<input type="text" class="form-control" placeholder="请输入商品原价">
+	    			<input type="text" class="form-control" placeholder="请输入商品原价" name="oldPrice">
 	    		</div>
 	    		<div class="form-group">
-	    			<input type="text" class="form-control" placeholder="请输入商品折扣">
+	    			<input type="text" class="form-control" placeholder="请输入商品折扣" name="price">
 	    		</div>
 	    		<div class="form-group">
-	    		   <input type="file" accept="image/jpeg" multiple>
-	    		   <p class="help-block">最多上传三张图片</p>
+					<input type="file" class="form-control" id="fileUpload" data-url="http://fullstack.net.cn:3000/product/addProductPic" name="pic1" accept="image/jpeg" multiple>
+				   <p class="help-block">最多上传三张图片</p>
+				   <img src="images/brand6.png" alt="..." class="img-thumbnail" id="imgPreview">
 	    		 </div>
-	    	</div>
+	    	</form>
 	    	<div class="modal-footer">
 	    		<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 	    		<button type="button" class="btn btn-primary" id="addProduct">添加</button>
@@ -139,5 +136,26 @@
 	    </div>
 	  </div>
 	</div>
+	<script type="text/html" id="proTpl">
+		<%for(var i=0;i<rows.length;i++){%>
+		<tr>
+				<td><%=rows[i].id%></td>
+				<td><%=rows[i].proName%></td>
+				<td><%=rows[i].proDesc%></td>
+				<td><%=rows[i].num%></td>
+				<td><%=rows[i].size%></td>
+				<td><%=rows[i].statu==1?"已上架商品":"未上架商品"%></td>
+				<td>
+					<button type="button" class="btn <%=rows[i].statu==1?"btn-danger":"btn-success"%>"><%=rows[i].statu==1?"下架":"上架"%></button>
+				</td>
+			</tr>
+			<%}%>
+	</script>
+	<script type="text/html" id="addTpl">
+		<option>-- 请选择 --</option>
+		<%for(var i =0;i<rows.length;i++){%>
+		<option>-- <%=rows[i].brandName%>--</option>
+		<%}%>
+	</script>
 </body>
 </html>
